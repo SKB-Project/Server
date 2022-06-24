@@ -1,6 +1,6 @@
 package com.project.skb.exception.controller;
 
-import com.project.skb.exception.reqeust.ExceptionResponseDto;
+import com.project.skb.exception.response.ExceptionResponseDto;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

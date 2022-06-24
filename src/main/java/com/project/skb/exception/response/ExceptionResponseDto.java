@@ -1,4 +1,4 @@
-package com.project.skb.exception.reqeust;
+package com.project.skb.exception.response;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
