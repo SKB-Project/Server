@@ -7,6 +7,7 @@ import com.project.skb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -26,9 +27,9 @@ public class UserController {
         return userService.userSignIn(signInRequestDto);
     }
 
-    @DeleteMapping("/quit/{email}")
-    public ResponseDto userQuit(@PathVariable String email){
-        return userService.userQuit(email);
+    @DeleteMapping("/quit")
+    public ResponseDto userQuit(ServletRequest request){
+        return userService.userQuit(request);
     }
 
 

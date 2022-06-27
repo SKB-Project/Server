@@ -9,9 +9,12 @@ import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.response.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class UserService {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     private final PasswordEncoder passwordEncoder;
     private final RedisTemplate redisTemplate;
+    private final UserDetailsService userDetailsService;
 
     public ResponseDto userSignUp(SignUpRequestDto signUpRequestDto){
         User user = User.builder()
@@ -54,11 +58,10 @@ public class UserService {
         return new ResponseDto("SUCCESS", tokenDto);
     }
 
-    public ResponseDto userQuit(String email) {
-        if (!userRepository.existsByEmail(email)) {
-            return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");}
+    public ResponseDto userQuit(ServletRequest request) {
+        String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
+        User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
-        User user = userRepository.findByEmail(email);
         userRepository.delete(user);
 
         return new ResponseDto("SUCCESS",user.getId());
