@@ -1,6 +1,7 @@
 package com.project.skb.user.controller;
 
 import com.project.skb.ResponseDto;
+import com.project.skb.user.request.SignInRequestDto;
 import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signUp")
-    public ResponseDto signUpController(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
+    public ResponseDto userSignUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto){
         return userService.userSignUp(signUpRequestDto);
     }
+
+    @PostMapping("/signIn") // "RequestBody"에 유효성 검증하기 위해서 "@Valid" 입력
+    public ResponseDto userSingIn(@Valid @RequestBody SignInRequestDto signInRequestDto){
+        return userService.userSignIn(signInRequestDto);
+    }
+
 }
