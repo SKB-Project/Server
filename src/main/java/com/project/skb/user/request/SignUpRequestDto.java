@@ -1,5 +1,6 @@
 package com.project.skb.user.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +17,9 @@ public class SignUpRequestDto {
     @NotBlank(message = "이름을 입력해주세요")
     private String name;
 
+    @Builder
+    public SignUpRequestDto(String email, String name){
+        this.email = email;
+        this.name = name;
+    }
 }
