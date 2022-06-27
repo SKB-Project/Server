@@ -5,11 +5,13 @@ import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
@@ -51,7 +53,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ExceptionResponseDto notFoundExceptionHandler(NoHandlerFoundException e){
-        log.error("[requestExceptionHandler]: {}",e);
+        log.error("[UrlExceptionHandler]: {}",e);
 
         // URL 경로가 잘못 되었을 때 예외처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
@@ -63,6 +65,21 @@ public class ExceptionController {
         return exceptionResponseDto;
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ExceptionResponseDto methodExceptionHandler(HttpRequestMethodNotSupportedException e){
+        log.error("[methodExceptionHandler]: {}",e);
+
+        // URL 경로가 잘못 되었을 때 예외처리
+        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
+                .code(405)
+                .message("Bad Request")
+                .exceptionContent(e.getMessage())
+                .build();
+
+        return exceptionResponseDto;
+    }
 
 
     @ResponseBody
