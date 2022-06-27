@@ -5,10 +5,7 @@ import com.project.skb.user.request.SignInRequestDto;
 import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,5 +25,11 @@ public class UserController {
     public ResponseDto userSingIn(@Valid @RequestBody SignInRequestDto signInRequestDto){
         return userService.userSignIn(signInRequestDto);
     }
+
+    @DeleteMapping("/quit/{email}")
+    public ResponseDto userQuit(@PathVariable String email){
+        return userService.userQuit(email);
+    }
+
 
 }

@@ -53,4 +53,15 @@ public class UserService {
 
         return new ResponseDto("SUCCESS", tokenDto);
     }
+
+    public ResponseDto userQuit(String email) {
+        if (!userRepository.existsByEmail(email)) {
+            return new ResponseDto("FAIL", "존재하지 않는 이메일입니다.");}
+
+        User user = userRepository.findByEmail(email);
+        userRepository.delete(user);
+
+        return new ResponseDto("SUCCESS",user.getId());
+
+    }
 }
