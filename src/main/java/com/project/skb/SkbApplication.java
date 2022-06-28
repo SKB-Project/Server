@@ -1,14 +1,13 @@
-package com.example.studyweb;
+package com.project.skb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudywebApplication {
+public class SkbApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudywebApplication.class, args);
-		// test
+		SpringApplication.run(SkbApplication.class, args);
 	}
 
 }
