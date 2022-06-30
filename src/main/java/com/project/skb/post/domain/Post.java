@@ -6,12 +6,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "post")
 @Entity
 public class Post {
@@ -30,6 +34,10 @@ public class Post {
     @Lob
     @Column(name = "content")
     private String content;
+
+    @CreatedDate
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "id")
