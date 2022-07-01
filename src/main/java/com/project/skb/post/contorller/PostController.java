@@ -5,6 +5,9 @@ import com.project.skb.post.request.CreatePostRequestDto;
 import com.project.skb.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
@@ -27,4 +30,10 @@ public class PostController {
         return postService.getPost(request, postId);
     }
 
+
+    @GetMapping("/posts/{type}/get")
+    public ResponseDto getPosts(ServletRequest request, @PathVariable String type,
+            @PageableDefault(size=10, sort="postId", direction= Sort.Direction.DESC) Pageable pageable) {
+        return postService.getPosts(request, type, pageable);
+    }
 }

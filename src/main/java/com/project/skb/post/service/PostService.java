@@ -9,11 +9,15 @@ import com.project.skb.post.response.GetPostResponseDto;
 import com.project.skb.user.domain.User;
 import com.project.skb.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -54,5 +58,15 @@ public class PostService {
                 .build();
 
         return new ResponseDto("SUCCESS", getPostResponseDto);
+    }
+
+    public ResponseDto getPosts(ServletRequest request, String type, Pageable pageable) {
+        List<GetPostResponseDto> pages = postRepository.findByType(type, pageable)
+                .stream()
+                .map(post -> new GetPostResponseDto(post))
+                .collect(Collectors.toList());
+
+        return new ResponseDto("SUCCESS",pages);
+
     }
 }
