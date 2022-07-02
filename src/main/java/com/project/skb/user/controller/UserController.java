@@ -27,6 +27,16 @@ public class UserController {
         return userService.userSignIn(signInRequestDto);
     }
 
+    @GetMapping("check/email/{email}")
+    public ResponseDto checkEmail(@PathVariable String email){
+        return userService.checkEmail(email);
+    }
+
+    @GetMapping("check/userName/{userName}")
+    public ResponseDto checkUserName(@PathVariable String userName){
+        return userService.checkUserid(userName);
+    }
+
     @DeleteMapping("/quit")
     public ResponseDto userQuit(ServletRequest request){
         return userService.userQuit(request);
