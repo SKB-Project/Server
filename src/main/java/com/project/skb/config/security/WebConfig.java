@@ -1,4 +1,4 @@
-package com.project.skb.config;
+package com.project.skb.config.security;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

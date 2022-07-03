@@ -1,9 +1,9 @@
 package com.project.skb.user.service;
 
 import com.project.skb.ResponseDto;
-import com.project.skb.config.JwtAuthenticationProvider;
+import com.project.skb.config.security.JwtAuthenticationProvider;
 import com.project.skb.user.domain.User;
-import com.project.skb.user.domain.UserRepository;
+import com.project.skb.user.repository.UserRepository;
 import com.project.skb.user.request.SignInRequestDto;
 import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.response.TokenDto;

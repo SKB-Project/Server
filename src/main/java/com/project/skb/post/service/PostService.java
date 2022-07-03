@@ -1,13 +1,13 @@
 package com.project.skb.post.service;
 
 import com.project.skb.ResponseDto;
-import com.project.skb.config.JwtAuthenticationProvider;
+import com.project.skb.config.security.JwtAuthenticationProvider;
 import com.project.skb.post.domain.Post;
-import com.project.skb.post.domain.PostRepository;
+import com.project.skb.post.repository.PostRepository;
 import com.project.skb.post.request.CreatePostRequestDto;
 import com.project.skb.post.response.GetPostResponseDto;
 import com.project.skb.user.domain.User;
-import com.project.skb.user.domain.UserRepository;
+import com.project.skb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
