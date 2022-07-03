@@ -1,7 +1,10 @@
 package com.project.skb.exception.response;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+@Getter
 @RequiredArgsConstructor
 public class ExceptionResponseDto {
 

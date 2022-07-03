@@ -27,7 +27,7 @@ public class ExceptionController {
         // "@Valid"에 맞지 않을 때 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(400)
-                .message("Bad Request")
+                .message("Check Validation")
                 .exceptionContent(e.getMessage())
                 .build();
         return exceptionResponseDto;
@@ -42,7 +42,7 @@ public class ExceptionController {
         // 잘못된 요청일 때 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(400)
-                .message("Bad Request")
+                .message("Check Request")
                 .exceptionContent(e.getMessage())
                 .build();
 
@@ -58,7 +58,7 @@ public class ExceptionController {
         // URL 경로가 잘못 되었을 때 예외처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(404)
-                .message("Bad Request")
+                .message("Check URL Path")
                 .exceptionContent(e.getMessage())
                 .build();
 
@@ -71,10 +71,10 @@ public class ExceptionController {
     public ExceptionResponseDto methodExceptionHandler(HttpRequestMethodNotSupportedException e){
         log.error("[methodExceptionHandler]: {}",e);
 
-        // URL 경로가 잘못 되었을 때 예외처리
+        // "HTTP Method"가 잘못 되었을 때 예외처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(405)
-                .message("Bad Request")
+                .message("Check HTTP Method")
                 .exceptionContent(e.getMessage())
                 .build();
 
@@ -123,7 +123,7 @@ public class ExceptionController {
         // 널 포인터 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(500)
-                .message("Server Error")
+                .message("Occur Null Pointer Exception")
                 .exceptionContent(e.getMessage())
                 .build();
 
