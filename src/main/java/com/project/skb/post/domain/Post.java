@@ -5,7 +5,7 @@ import com.project.skb.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,9 +13,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
 @Table(name = "post")
 @Entity
 public class Post {
@@ -50,4 +50,19 @@ public class Post {
         this.content = content;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

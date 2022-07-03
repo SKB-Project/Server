@@ -2,12 +2,14 @@ package com.project.skb.post.contorller;
 
 import com.project.skb.ResponseDto;
 import com.project.skb.post.request.CreatePostRequestDto;
+import com.project.skb.post.request.EditPostRequestDto;
 import com.project.skb.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
@@ -36,4 +38,11 @@ public class PostController {
             @PageableDefault(size=10, sort="postId", direction= Sort.Direction.DESC) Pageable pageable) {
         return postService.getPosts(request, type, pageable);
     }
+
+    @PutMapping("/post/{postId}/edit")
+    public ResponseDto editPost(ServletRequest request, @PathVariable Long postId,
+                                @Validated @RequestBody EditPostRequestDto editPostRequestDto){
+        return postService.editPost(request, postId, editPostRequestDto);
+    }
+
 }
