@@ -95,4 +95,14 @@ public class PostService {
 
         return new ResponseDto("SUCCESS", post.getPostId());
     }
+
+    public ResponseDto deletePost(ServletRequest request, Long postId) {
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+        postRepository.delete(post);
+
+        return new ResponseDto("SUCCESS", "게시글 삭제 완료!");
+    }
 }
