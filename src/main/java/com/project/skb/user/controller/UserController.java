@@ -27,13 +27,13 @@ public class UserController {
         return userService.userSignIn(signInRequestDto);
     }
 
-    @GetMapping("check/{email}") // 회원가입 시 작성한 이메일이 데이터베이스에 중복되어 있으면 회원가입 불가
+    @GetMapping("check/email/{email}") // 회원가입 시 작성한 이메일이 데이터베이스에 중복되어 있으면 회원가입 불가
     // 이메일 형식은 꼭 지켜야 할 것! email@naver.com
     public ResponseDto checkEmail(@PathVariable String email){
         return userService.checkEmail(email);
     }
 
-    @GetMapping("check/{userName}") // 회원가입 시 작성한 아이디가 데이터베이스에 중복되어 있으면 회원가입 불가
+    @GetMapping("check/userName/{userName}") // 회원가입 시 작성한 아이디가 데이터베이스에 중복되어 있으면 회원가입 불가
     // 여기서 아이디는 웹사이트내에서 사용하는 닉네임 개념(로그인 시에는 이메일, 비밀번호 사용!)
     public ResponseDto checkUserName(@PathVariable String userName){
         return userService.checkUserid(userName);
