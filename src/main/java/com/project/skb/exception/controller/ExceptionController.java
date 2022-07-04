@@ -1,5 +1,6 @@
 package com.project.skb.exception.controller;
 
+import com.project.skb.exception.domain.PostNotFoundException;
 import com.project.skb.exception.response.ExceptionResponseDto;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class ExceptionController {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ExceptionResponseDto requestExceptionHandler(IllegalReceiveException e){
+    public ExceptionResponseDto requestExceptionHandler(IllegalArgumentException e){
         log.error("[requestExceptionHandler]: {}",e);
 
         // 잘못된 요청일 때 예외 처리
@@ -50,7 +51,6 @@ public class ExceptionController {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ExceptionResponseDto notFoundExceptionHandler(NoHandlerFoundException e){
         log.error("[UrlExceptionHandler]: {}",e);
@@ -99,23 +99,6 @@ public class ExceptionController {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public ExceptionResponseDto runtimeExceptionHandler(RuntimeException e){
-        log.error("[runtimeExceptionHandler]= {}",e);
-
-        // 서버 런타임 예외 처리
-        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
-                .code(500)
-                .message("Server Error")
-                .exceptionContent(e.getMessage())
-                .build();
-
-        return exceptionResponseDto;
-
-    }
-
-    @ResponseBody
     @ExceptionHandler(NullPointerException.class)
     public ExceptionResponseDto nullExceptionHandler(NullPointerException e){
         log.error("[nullExceptionHandler]= {}",e);
@@ -129,4 +112,39 @@ public class ExceptionController {
 
         return exceptionResponseDto;
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler
+    public ExceptionResponseDto runtimeExceptionHandler(RuntimeException e){
+        log.error("[runtimeExceptionHandler]= {}",e);
+
+        // Runtime Exception 예외 처리
+        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
+                .code(500)
+                .message("Occur Runtime Exception")
+                .exceptionContent(e.getMessage())
+                .build();
+
+        return exceptionResponseDto;
+
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler
+    public ExceptionResponseDto postNotFoundExceptionHandler(PostNotFoundException e){
+        log.error("[PostNotFoundExceptionHandler]= {}",e);
+
+        // Post Not Found 예외 처리
+        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
+                .code(404)
+                .message("Check Post ID")
+                .exceptionContent(e.getMessage())
+                .build();
+
+        return exceptionResponseDto;
+    }
+
+
 }
