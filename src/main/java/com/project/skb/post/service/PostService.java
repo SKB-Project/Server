@@ -2,6 +2,7 @@ package com.project.skb.post.service;
 
 import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
+import com.project.skb.exception.domain.PostNotFoundException;
 import com.project.skb.post.domain.Post;
 import com.project.skb.post.repository.PostRepository;
 import com.project.skb.post.request.CreatePostRequestDto;
@@ -51,7 +52,7 @@ public class PostService {
     public ResponseDto getPost(ServletRequest request, Long postId) {
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(() -> new PostNotFoundException());
 
         GetPostResponseDto getPostResponseDto = GetPostResponseDto.builder()
                 .type(post.getType())
@@ -76,7 +77,7 @@ public class PostService {
     public ResponseDto editPost(ServletRequest request, Long postId, EditPostRequestDto editPostRequestDto) {
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(() -> new PostNotFoundException());
 
         if (!post.getType().equals(editPostRequestDto.getType())) { // type 변경
             post.setType(editPostRequestDto.getType());
@@ -99,7 +100,7 @@ public class PostService {
     public ResponseDto deletePost(ServletRequest request, Long postId) {
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+                .orElseThrow(() -> new PostNotFoundException());
 
         postRepository.delete(post);
 
