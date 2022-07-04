@@ -28,7 +28,7 @@ public class ExceptionController {
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(400)
                 .message("Check Validation")
-                .exceptionContent(e.getMessage())
+                .exceptionContent(e.getBindingResult().getAllErrors().get(0).getDefaultMessage())
                 .build();
         return exceptionResponseDto;
     }
