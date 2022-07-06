@@ -1,4 +1,4 @@
-package com.project.skb.config;
+package com.project.skb.config.security;
 
 import com.project.skb.user.response.TokenDto;
 import io.jsonwebtoken.*;
