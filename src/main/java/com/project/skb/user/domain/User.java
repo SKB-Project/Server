@@ -30,15 +30,18 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "userName")
+    private String userName;
+
     @Column(name = "password")
     private String password;
 
     @Builder
-    public User(String name, String email, String password){
+    public User(String name, String email, String userName, String password){
         this.name = name;
         this.email = email;
+        this.userName = userName;
         this.password = password;
-
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
