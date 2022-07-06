@@ -27,6 +27,7 @@ public class UserController {
         return userService.userSignIn(signInRequestDto);
     }
 
+    // log찍어보기
     @GetMapping("check/email/{email}") // 회원가입 시 작성한 이메일이 데이터베이스에 중복되어 있으면 회원가입 불가
     // 이메일 형식은 꼭 지켜야 할 것! email@naver.com
     public ResponseDto checkEmail(@PathVariable String email){
