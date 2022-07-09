@@ -1,5 +1,6 @@
 package com.project.skb.user.domain;
 
+import com.project.skb.study.domain.Study;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,12 +34,24 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @ManyToOne // User 클래스는 Many, Study 클래스는 one
+    @JoinColumn(name = "study_id") // 실제 외래 키(study_id)를 가지고 있는 엔티티가 연관관계의 주인
+    private Study study;
+
     @Builder
     public User(String name, String email, String password){
         this.name = name;
         this.email = email;
         this.password = password;
 
+    }
+
+    public void setStudy(Study study){
+        if(this.getStudy() != null){
+            this.study = null;
+        }
+        this.study = study;
+        study.getUserList().add(this);
     }
 
     @ElementCollection(fetch = FetchType.EAGER)
