@@ -4,6 +4,7 @@ import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
 import com.project.skb.study.domain.Study;
 import com.project.skb.study.repository.StudyRepository;
+import com.project.skb.study.request.StudyCreateRequestDto;
 import com.project.skb.user.domain.User;
 import com.project.skb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,25 @@ public class StudyService {
     private final UserRepository userRepository;
     private final StudyRepository studyRepository;
 
+    public ResponseDto createStudy(ServletRequest request, StudyCreateRequestDto studyCreateRequestDto) {
+
+        Study study = Study.builder()
+                .title(studyCreateRequestDto.getTitle())
+                .limitedNumber(studyCreateRequestDto.getLimitedNumber())
+                .build();
+
+        studyRepository.save(study); // 영속성 컨텍스트에 생성된 "study"등록
+
+        String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
+        User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
+
+        user.setStudy(study);
+        userRepository.save(user); // 스터디를 생성한 "user"도 스터디에 참가
+
+        return new ResponseDto("SUCCESS",study.getStudyId());
+
+    }
+
     public ResponseDto joinStudy(ServletRequest request, Long studyId) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
@@ -37,4 +57,5 @@ public class StudyService {
         return new ResponseDto("SUCCESS",user.getId());
 
     }
+
 }
