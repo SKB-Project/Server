@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,20 +79,9 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException());
 
-        if (!post.getType().equals(editPostRequestDto.getType())) { // type 변경
-            post.setType(editPostRequestDto.getType());
-            postRepository.save(post);
-        }
-
-        if (!post.getTitle().equals(editPostRequestDto.getTitle())) { // title 변경
-            post.setTitle(editPostRequestDto.getTitle());
-            postRepository.save(post);
-        }
-
-        if (!post.getContent().equals(editPostRequestDto.getContent())) { // content 변경
-            post.setContent(editPostRequestDto.getContent());
-            postRepository.save(post);
-        }
+        post.setType(editPostRequestDto.getType());
+        post.setTitle(editPostRequestDto.getTitle());
+        post.setContent(editPostRequestDto.getContent());
 
         return new ResponseDto("SUCCESS", post.getPostId());
     }
