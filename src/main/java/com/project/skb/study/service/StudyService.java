@@ -2,6 +2,7 @@ package com.project.skb.study.service;
 
 import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
+import com.project.skb.exception.domain.StudyNotFoundException;
 import com.project.skb.study.domain.Study;
 import com.project.skb.study.repository.StudyRepository;
 import com.project.skb.study.request.StudyCreateRequestDto;
@@ -47,7 +48,14 @@ public class StudyService {
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
         Study study = studyRepository.findById(studyId).
-                orElseThrow(() -> new IllegalArgumentException("존재하지 않는 스터디입니다."));
+                orElseThrow(() -> new StudyNotFoundException());
+
+        if(study.getNumber().equals(study.getLimitedNumber())){
+            return new ResponseDto("FAIL","스터디 인원이 초과하였습니다.");
+        }
+        else {
+            study.setNumber(study.getNumber() + 1);
+        }
 
         user.setStudy(study);
         userRepository.save(user);

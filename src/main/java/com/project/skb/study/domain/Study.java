@@ -41,4 +41,8 @@ public class Study {
         this.limitedNumber = limitedNumber;
         this.number = 1;
     }
+
+    public void setNumber(Integer number){
+        this.number = number;
+    }
 }

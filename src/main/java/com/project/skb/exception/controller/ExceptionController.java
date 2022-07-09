@@ -1,6 +1,7 @@
 package com.project.skb.exception.controller;
 
 import com.project.skb.exception.domain.PostNotFoundException;
+import com.project.skb.exception.domain.StudyNotFoundException;
 import com.project.skb.exception.response.ExceptionResponseDto;
 import com.sun.nio.sctp.IllegalReceiveException;
 import lombok.extern.slf4j.Slf4j;
@@ -145,6 +146,24 @@ public class ExceptionController {
 
         return exceptionResponseDto;
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler
+    public ExceptionResponseDto studyNotFoundExceptionHandler(StudyNotFoundException e){
+        log.error("[StudyNotFoundExceptionHandler]= {}",e);
+
+        // Post Not Found 예외 처리
+        ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
+                .code(404)
+                .message("Check Study ID")
+                .exceptionContent(e.getMessage())
+                .build();
+
+        return exceptionResponseDto;
+    }
+
+
 
 
 }
