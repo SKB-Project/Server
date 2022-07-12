@@ -36,10 +36,10 @@ public class Study {
     private List<User> userList = new ArrayList<User>();
 
     @Builder
-    public Study(String title, int limitedNumber){
+    public Study(String title, int limitedNumber, int number){
         this.title = title;
         this.limitedNumber = limitedNumber;
-        this.number = 1;
+        this.number = number;
     }
 
     public void setNumber(Integer number){

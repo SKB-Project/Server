@@ -27,4 +27,5 @@ public class StudyController {
         return studyService.joinStudy(request, studyId);
     }
 
+
 }

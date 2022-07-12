@@ -29,6 +29,7 @@ public class StudyService {
         Study study = Study.builder()
                 .title(studyCreateRequestDto.getTitle())
                 .limitedNumber(studyCreateRequestDto.getLimitedNumber())
+                .number(1)
                 .build();
 
         studyRepository.save(study); // 영속성 컨텍스트에 생성된 "study"등록
