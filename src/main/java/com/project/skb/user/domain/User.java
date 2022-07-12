@@ -47,11 +47,7 @@ public class User implements UserDetails {
     }
 
     public void setStudy(Study study){
-        if(this.getStudy() != null){
-            this.study = null;
-        }
         this.study = study;
-        study.getUserList().add(this);
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

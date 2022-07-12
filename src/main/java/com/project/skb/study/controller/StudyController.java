@@ -4,10 +4,7 @@ import com.project.skb.ResponseDto;
 import com.project.skb.study.request.StudyCreateRequestDto;
 import com.project.skb.study.service.StudyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 
@@ -27,5 +24,9 @@ public class StudyController {
         return studyService.joinStudy(request, studyId);
     }
 
+    @DeleteMapping("study/banish/{userId}")
+    public ResponseDto banishUser(ServletRequest request, @PathVariable Long userId){
+        return studyService.banishUser(request, userId);
+    }
 
 }
