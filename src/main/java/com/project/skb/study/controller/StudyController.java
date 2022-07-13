@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,7 +16,8 @@ public class StudyController {
     private final StudyService studyService;
 
     @PostMapping("/study/create")
-    public ResponseDto createStudy(ServletRequest request, @RequestBody StudyCreateRequestDto studyCreateRequestDto){
+    public ResponseDto createStudy(ServletRequest request,
+                                   @Valid @RequestBody StudyCreateRequestDto studyCreateRequestDto){
         return studyService.createStudy(request, studyCreateRequestDto);
     }
 

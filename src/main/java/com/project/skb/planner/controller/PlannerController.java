@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletRequest;
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,7 +18,8 @@ public class PlannerController {
     private final PlannerService plannerService;
 
     @PostMapping("study/planner/time/create")
-    public ResponseDto writeStudyTime(ServletRequest request ,@RequestBody WriteStudyTimeRequestDto writeStudyTimeRequestDto){
+    public ResponseDto writeStudyTime(ServletRequest request ,
+                                      @Valid @RequestBody WriteStudyTimeRequestDto writeStudyTimeRequestDto){
         return plannerService.writeStudyTime(request, writeStudyTimeRequestDto);
     }
 
