@@ -39,7 +39,7 @@ public class Post {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private User user;
 

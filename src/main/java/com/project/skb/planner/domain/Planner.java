@@ -32,7 +32,7 @@ public class Planner{
     @Column(name = "study_time")
     private String studyTime; // 문자열로 받고 나중에 문자열을 정수형으로 반환해서 로직 처리
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private User user;
 
