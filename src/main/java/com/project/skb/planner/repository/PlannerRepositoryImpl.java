@@ -17,7 +17,7 @@ public class PlannerRepositoryImpl implements PlannerRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<GetStudyTimeResponseDto> getStudyTime(Long userId, LocalDate date) {
+    public List<GetStudyTimeResponseDto> getStudyTimeDay(Long userId, LocalDate date) {
 
         List<GetStudyTimeResponseDto> result = jpaQueryFactory
                 .select(Projections.fields(GetStudyTimeResponseDto.class,
@@ -25,8 +25,21 @@ public class PlannerRepositoryImpl implements PlannerRepositoryCustom {
                         QPlanner.planner.title))
                 .from(QPlanner.planner)
                 .where(userIdEq(userId)
-                    .and(QPlanner.planner.date.eq(date)))
-                .fetch(); // 조회 대상이 1건, 조회 대상이 여러건일 경우 -> fetch(), "Collection"으로 반환
+                    .and(dateEq(date))) // "and()"는 ","로 대체 가능
+                .fetch(); // fetchOne()은 조회 대상이 1건, 조회 대상이 여러건일 경우 -> fetch(), "Collection"으로 반환
+
+        return result;
+    }
+
+    public List<GetStudyTimeResponseDto> getStudyTimeMonth(Long userId, LocalDate startDate, LocalDate endDate) {
+
+        List<GetStudyTimeResponseDto> result = jpaQueryFactory
+                .select(Projections.fields(GetStudyTimeResponseDto.class,
+                        QPlanner.planner.studyTime,
+                        QPlanner.planner.title))
+                .from(QPlanner.planner)
+                .where(userIdEq(userId), QPlanner.planner.date.between(startDate, endDate))
+                .fetch();
 
         return result;
     }
@@ -38,4 +51,10 @@ public class PlannerRepositoryImpl implements PlannerRepositoryCustom {
         return QUser.user.id.eq(userId);
     }
 
+    private BooleanExpression dateEq(LocalDate date){
+        if(date == null){
+            return null;
+        }
+        return QPlanner.planner.date.eq(date);
+    }
 }

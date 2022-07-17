@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -44,11 +45,40 @@ public class PlannerService {
         return new ResponseDto("SUCCESS",planner.getPlannerId());
     }
 
-    public ResponseDto getStudyTime(GetStudyTimeRequestDto getStudyTimeRequestDto) {
+    public ResponseDto getStudyTimeDay(GetStudyTimeRequestDto getStudyTimeRequestDto) {
         Long userId = getStudyTimeRequestDto.getUserId();
         LocalDate date = getStudyTimeRequestDto.getDate();
 
-        List<GetStudyTimeResponseDto> result = plannerRepositoryImpl.getStudyTime(userId, date);
+        List<GetStudyTimeResponseDto> result = plannerRepositoryImpl.getStudyTimeDay(userId, date);
+        return new ResponseDto("SUCCESS",result);
+    }
+
+    public ResponseDto getStudyTimeMonth(GetStudyTimeRequestDto getStudyTimeRequestDto) {
+        Long userId = getStudyTimeRequestDto.getUserId();
+        LocalDate date = getStudyTimeRequestDto.getDate();
+
+        String tempStartDate = date.toString();
+        String tempEndDate = date.toString();
+
+        int tempDayOfMonth = date.getDayOfMonth();
+
+        String oldDayOfMonth = Integer.toString(tempDayOfMonth);
+        String newDayOfMonth = Integer.toString(tempDayOfMonth);
+
+        tempStartDate = tempStartDate.replace(oldDayOfMonth, newDayOfMonth);
+
+        if(tempDayOfMonth<10){ // "10"이하의 숫자들의 Date 형태는 01, 02.. 이기에 정수형으로 변환시 앞의 0이 날라감 -> 1,2,3..
+            tempEndDate = tempEndDate.replace("0"+oldDayOfMonth,"31");
+        }
+        else{
+            tempEndDate = tempEndDate.replace(oldDayOfMonth,"31");
+        }
+
+        LocalDate startDate = LocalDate.parse(tempStartDate, DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse(tempEndDate, DateTimeFormatter.ISO_DATE);
+
+        List<GetStudyTimeResponseDto> result = plannerRepositoryImpl.getStudyTimeMonth(userId, startDate, endDate);
+
         return new ResponseDto("SUCCESS",result);
     }
 }

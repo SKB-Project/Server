@@ -25,8 +25,13 @@ public class PlannerController {
         return plannerService.writeStudyTime(request, writeStudyTimeRequestDto);
     }
 
-    @GetMapping("study/planner/studyTime/get")
+    @GetMapping("study/planner/studyTime/day/get")
     public ResponseDto getStudyTime(@RequestBody GetStudyTimeRequestDto getStudyTimeRequestDto){
-        return plannerService.getStudyTime(getStudyTimeRequestDto);
+        return plannerService.getStudyTimeDay(getStudyTimeRequestDto);
+    }
+
+    @GetMapping("study/planner/studyTime/month/get")
+    public ResponseDto getStudyTimeMonth(@RequestBody GetStudyTimeRequestDto getStudyTimeRequestDto){
+        return plannerService.getStudyTimeMonth(getStudyTimeRequestDto);
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PlannerRepositoryCustom {
 
-    List<GetStudyTimeResponseDto> getStudyTime(Long userId, LocalDate date);
+    List<GetStudyTimeResponseDto> getStudyTimeDay(Long userId, LocalDate date); // 해당 일자 조회
+    List<GetStudyTimeResponseDto> getStudyTimeMonth(Long userId, LocalDate startDate, LocalDate endDate); // 해당 월 조회
 
 }
