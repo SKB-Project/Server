@@ -55,9 +55,11 @@ public class PostService {
                 .orElseThrow(() -> new PostNotFoundException());
 
         GetPostResponseDto getPostResponseDto = GetPostResponseDto.builder()
+                .postId(post.getPostId())
                 .type(post.getType())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .dateTime(post.getDateTime())
                 .build();
 
         return new ResponseDto("SUCCESS", getPostResponseDto);
