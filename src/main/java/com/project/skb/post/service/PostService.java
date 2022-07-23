@@ -42,6 +42,7 @@ public class PostService {
                 .build();
 
         post.setUser(user);
+        post.setViewCount(0L); // 추가된 부분 처음 게시글을 만들면 조회수 0
 
         postRepository.save(post);
 
@@ -108,4 +109,21 @@ public class PostService {
 
         return new ResponseDto("SUCCESS", "게시글 삭제 완료!");
     }
+
+    public ResponseDto viewCountPost(ServletRequest request, Long postId) {
+        // 추가된 부분 게시글 조회수를 올리는 함수
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException());
+
+        Long viewCount = post.getViewCount() + 1L;
+        // API를 통해 호출될 때 마다 조회수 1씩 올림
+        post.setViewCount(viewCount);
+
+        postRepository.save(post);
+
+
+        return new ResponseDto("SUCCESS", "게시글 조회 성공");
+    }
+
 }

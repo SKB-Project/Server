@@ -50,4 +50,8 @@ public class PostController {
         return postService.deletePost(request, postId);
     }
 
+    @PostMapping("/post/{postId}/viewCount") // 게시글 조회수를 올리는 api
+    public ResponseDto viewCountPost(ServletRequest request, @PathVariable Long postId){
+        return postService.viewCountPost(request, postId);
+    }
 }

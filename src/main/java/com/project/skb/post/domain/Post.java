@@ -39,15 +39,19 @@ public class Post {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+    @Column(name = "view_count")
+    private Long viewCount; // 조회수 기능을 위한 게시글 조회수 변수
+
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
 
     @Builder
-    public Post(String type, String title, String content){
+    public Post(String type, String title, String content, Long viewCount){
         this.type = type;
         this.title = title;
         this.content = content;
+        this.viewCount = viewCount;
     }
 
     public void setType(String type) {
@@ -64,5 +68,9 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
     }
 }
