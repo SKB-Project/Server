@@ -1,5 +1,6 @@
 package com.project.skb.planner.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,13 @@ public class WriteStudyTimeRequestDto {
 
     @NotBlank(message = "오늘 공부한 유형을 입력해주세요.")
     private String title;
+
     @NotBlank(message = "공부 시간을 입력해주세요.")
     private String studyTime;
 
+    @Builder
+    public WriteStudyTimeRequestDto(String title, String studyTime){
+        this.title = title;
+        this.studyTime = studyTime;
+    }
 }

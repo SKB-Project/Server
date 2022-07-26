@@ -153,7 +153,7 @@ public class ExceptionController {
     public ExceptionResponseDto studyNotFoundExceptionHandler(StudyNotFoundException e){
         log.error("[StudyNotFoundExceptionHandler]= {}",e);
 
-        // Post Not Found 예외 처리
+        // Study Not Found 예외 처리
         ExceptionResponseDto exceptionResponseDto = ExceptionResponseDto.builder()
                 .code(404)
                 .message("Check Study ID")

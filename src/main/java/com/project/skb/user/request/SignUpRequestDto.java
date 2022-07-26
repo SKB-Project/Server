@@ -3,6 +3,7 @@ package com.project.skb.user.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
+@NoArgsConstructor // 파라미터가 없는 기본 생성자 생성 어노테이션
 public class SignUpRequestDto {
 
     @Email(message = "이메일 형식을 확인해주세요")
