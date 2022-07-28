@@ -50,7 +50,7 @@ public class Post {
         this.content = content;
     }
 
-    public void setUser(User user) {
+    public void insertUser(User user) {
         this.user = user;
     }
 }

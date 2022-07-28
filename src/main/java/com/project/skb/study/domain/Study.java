@@ -41,7 +41,7 @@ public class Study {
         this.number = number;
     }
 
-    public void setNumber(Integer number){
+    public void changeNumber(Integer number){
         this.number = number;
     }
 }

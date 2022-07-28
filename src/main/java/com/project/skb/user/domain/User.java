@@ -48,7 +48,7 @@ public class User implements UserDetails {
 
     }
 
-    public void setStudy(Study study){
+    public void joinStudy(Study study){
         this.study = study;
     }
 

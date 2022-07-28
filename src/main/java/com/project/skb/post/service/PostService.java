@@ -41,7 +41,7 @@ public class PostService {
                 .content(createPostRequestDto.getContent())
                 .build();
 
-        post.setUser(user);
+        post.insertUser(user);
 
         postRepository.save(post);
 
