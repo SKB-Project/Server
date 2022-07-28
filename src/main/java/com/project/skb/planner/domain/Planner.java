@@ -12,9 +12,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
-@Setter
-@Entity
 @EntityListeners(AuditingEntityListener.class)
+@Entity
 public class Planner{
 
     @Id
@@ -40,6 +39,10 @@ public class Planner{
     public Planner(String title, String studyTime){
         this.title = title;
         this.studyTime = studyTime;
+    }
+
+    public void insertUser(User user){
+        this.user = user;
     }
 
 }

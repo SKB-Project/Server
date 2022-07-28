@@ -30,7 +30,7 @@ public class PlannerService {
     private final UserRepository userRepository;
     private final PlannerRepositoryImpl plannerRepositoryImpl;
 
-    public ResponseDto writeStudyTime(ServletRequest request, WriteStudyTimeRequestDto writeStudyTimeRequestDto) {
+    public ResponseDto writeStudyContent(ServletRequest request, WriteStudyTimeRequestDto writeStudyTimeRequestDto) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
@@ -39,7 +39,7 @@ public class PlannerService {
                 .studyTime(writeStudyTimeRequestDto.getStudyTime())
                 .build();
 
-        planner.setUser(user);
+        planner.insertUser(user);
         plannerRepository.save(planner);
 
         return new ResponseDto("SUCCESS",planner.getPlannerId());

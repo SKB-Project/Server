@@ -79,11 +79,13 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException());
 
-        post.setType(editPostRequestDto.getType());
-        post.setTitle(editPostRequestDto.getTitle());
-        post.setContent(editPostRequestDto.getContent());
+        Post postUpdated = Post.builder()
+                .type(editPostRequestDto.getType())
+                .title(editPostRequestDto.getTitle())
+                .content(editPostRequestDto.getContent())
+                .build();
 
-        return new ResponseDto("SUCCESS", post.getPostId());
+        return new ResponseDto("SUCCESS", postUpdated.getPostId());
     }
 
     public ResponseDto deletePost(ServletRequest request, Long postId) {

@@ -20,9 +20,9 @@ public class PlannerController {
     private final PlannerService plannerService;
 
     @PostMapping("study/planner/time/create")
-    public ResponseDto writeStudyTime(ServletRequest request ,
+    public ResponseDto writeStudyContent(ServletRequest request ,
                                       @Valid @RequestBody WriteStudyTimeRequestDto writeStudyTimeRequestDto){
-        return plannerService.writeStudyTime(request, writeStudyTimeRequestDto);
+        return plannerService.writeStudyContent(request, writeStudyTimeRequestDto);
     }
 
     @GetMapping("study/planner/studyTime/day/get")

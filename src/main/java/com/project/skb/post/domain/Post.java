@@ -50,18 +50,6 @@ public class Post {
         this.content = content;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
