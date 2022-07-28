@@ -1,4 +1,4 @@
-package com.project.skb.planner.repository;
+package com.project.skb.planner.domain;
 
 import com.project.skb.planner.response.GetStudyTimeResponseDto;
 

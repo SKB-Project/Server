@@ -1,6 +1,7 @@
-package com.project.skb.post.repository;
+package com.project.skb.post.domain;
 
 import com.project.skb.post.domain.Post;
+import com.project.skb.post.domain.PostRepositoryCustom;
 import com.project.skb.post.domain.QPost;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom{
+public class PostRepositoryImpl implements PostRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 

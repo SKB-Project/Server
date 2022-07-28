@@ -1,5 +1,6 @@
-package com.project.skb.planner.repository;
+package com.project.skb.planner.domain;
 
+import com.project.skb.planner.domain.PlannerRepositoryCustom;
 import com.project.skb.planner.domain.QPlanner;
 import com.project.skb.planner.response.GetStudyTimeResponseDto;
 import com.project.skb.user.domain.QUser;
