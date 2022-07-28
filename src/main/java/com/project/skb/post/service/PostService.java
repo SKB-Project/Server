@@ -31,6 +31,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
+    @Transactional
     public ResponseDto createPost(ServletRequest request, CreatePostRequestDto createPostRequestDto) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
@@ -88,6 +89,7 @@ public class PostService {
         return new ResponseDto("SUCCESS", postUpdated.getPostId());
     }
 
+    @Transactional
     public ResponseDto deletePost(ServletRequest request, Long postId) {
 
         Post post = postRepository.findById(postId)

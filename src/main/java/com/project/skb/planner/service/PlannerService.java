@@ -13,6 +13,7 @@ import com.project.skb.planner.request.WriteStudyTimeRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class PlannerService {
     private final UserRepository userRepository;
     private final PlannerRepositoryImpl plannerRepositoryImpl;
 
+    @Transactional
     public ResponseDto writeStudyContent(ServletRequest request, WriteStudyTimeRequestDto writeStudyTimeRequestDto) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));

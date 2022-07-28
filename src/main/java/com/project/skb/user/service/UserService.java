@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ public class UserService {
     private final RedisTemplate redisTemplate;
     private final UserDetailsService userDetailsService;
 
+    @Transactional
     public ResponseDto userSignUp(SignUpRequestDto signUpRequestDto){
         User user = User.builder()
                 .name(signUpRequestDto.getName())
@@ -58,6 +60,7 @@ public class UserService {
         return new ResponseDto("SUCCESS", tokenDto);
     }
 
+    @Transactional
     public ResponseDto userQuit(ServletRequest request) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
