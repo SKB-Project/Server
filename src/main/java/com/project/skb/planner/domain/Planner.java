@@ -23,7 +23,11 @@ public class Planner{
 
     @CreatedDate
     @Column(name = "date")
-    private LocalDate date; // 오늘의 공부 시간 기록, @CreatedDate 어노테이션의 특징 때문
+    private LocalDate date;
+    /*
+    * 오늘의 공부 시간 기록, @CreatedDate 어노테이션으로 인해 엔티티 생성시 자동으로 시간 등록
+    * 다른 엔티티에서도 "LocalDate"를 사용할 경우 "@MappedSuperClass"의 "BaseEntity" 고려
+    * */
 
     @Column(name = "title")
     private String title; // 오늘 공부 내용, 국어 or 영어 or 수학 ...
