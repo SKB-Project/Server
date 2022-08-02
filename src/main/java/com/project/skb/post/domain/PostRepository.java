@@ -1,6 +1,5 @@
-package com.project.skb.post.repository;
+package com.project.skb.post.domain;
 
-import com.project.skb.post.domain.Post;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

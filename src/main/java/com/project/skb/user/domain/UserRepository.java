@@ -1,4 +1,4 @@
-package com.project.skb.user.repository;
+package com.project.skb.user.domain;
 
 import com.project.skb.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

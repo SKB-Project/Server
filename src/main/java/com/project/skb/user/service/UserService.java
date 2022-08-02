@@ -3,8 +3,8 @@ package com.project.skb.user.service;
 import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
 import com.project.skb.user.domain.User;
-import com.project.skb.user.repository.UserRepository;
 import com.project.skb.user.response.LoginDto;
+import com.project.skb.user.domain.UserRepository;
 import com.project.skb.user.request.SignInRequestDto;
 import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.response.TokenDto;
@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class UserService {
     private final RedisTemplate redisTemplate;
     private final UserDetailsService userDetailsService;
 
+    @Transactional
     public ResponseDto userSignUp(SignUpRequestDto signUpRequestDto){
 
         if(userRepository.existsByEmail(signUpRequestDto.getEmail())){
@@ -85,6 +87,7 @@ public class UserService {
         return new ResponseDto("SUCCESS",loginDto);
     }
 
+    @Transactional
     public ResponseDto userQuit(ServletRequest request) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));

@@ -1,4 +1,4 @@
-package com.project.skb.post.repository;
+package com.project.skb.post.domain;
 
 import com.project.skb.post.domain.Post;
 

@@ -1,8 +1,11 @@
 package com.project.skb.user.domain;
 
+import com.project.skb.study.domain.Study;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "user")
-@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -36,12 +39,20 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @ManyToOne(fetch = FetchType.LAZY) // User 클래스는 Many, Study 클래스는 one, 지연로딩 적용
+    @JoinColumn(name = "study_id") // 실제 외래 키(study_id)를 가지고 있는 엔티티가 연관관계의 주인
+    private Study study;
+
     @Builder
     public User(String name, String email, String userName, String password){
         this.name = name;
         this.email = email;
         this.userName = userName;
         this.password = password;
+    }
+
+    public void joinStudy(Study study){
+        this.study = study;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

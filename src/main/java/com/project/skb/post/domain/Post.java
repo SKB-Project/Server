@@ -39,11 +39,13 @@ public class Post {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+
     @Column(name = "view_count")
     private Long viewCount; // 조회수 기능을 위한 게시글 조회수 변수
 
     // (fetch = FetchType.LAZY)
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private User user;
 
@@ -55,19 +57,7 @@ public class Post {
         this.viewCount = viewCount;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setUser(User user) {
+    public void insertUser(User user) {
         this.user = user;
     }
 
