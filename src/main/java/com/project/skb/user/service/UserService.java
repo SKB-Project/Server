@@ -30,15 +30,37 @@ public class UserService {
 
     @Transactional
     public ResponseDto userSignUp(SignUpRequestDto signUpRequestDto){
+
+        if(userRepository.existsByEmail(signUpRequestDto.getEmail())){
+            return new ResponseDto("FAIL","이미 가입되어있는 회원입니다.");
+        } // add
+
         User user = User.builder()
                 .name(signUpRequestDto.getName())
                 .email(signUpRequestDto.getEmail())
+                .userName(signUpRequestDto.getUserName())
                 .password(passwordEncoder.encode(signUpRequestDto.getPassword()))
                 .build();
 
         userRepository.save(user);
 
         return new ResponseDto("SUCCESS",user.getId());
+    }
+
+    public ResponseDto checkEmail(String email) {
+        boolean result = userRepository.existsByEmail(email);
+        if (result) {
+            return new ResponseDto("FAIL", "이미 존재하는 이메일입니다.");
+        }
+        return new ResponseDto("SUCCESS", "사용가능한 이메일입니다.");
+    }
+
+    public ResponseDto checkUserid(String userName) {
+        boolean result = userRepository.existsByUserName(userName);
+        if (result) {
+            return new ResponseDto("FAIL", "이미 존재하는 아이디입니다.");
+        }
+        return new ResponseDto("SUCCESS", "사용가능한 아이디입니다.");
     }
 
     public ResponseDto userSignIn(SignInRequestDto signInRequestDto) {
@@ -65,6 +87,8 @@ public class UserService {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
+        // 해야할 것
+        // user 값이 null일 경우 체크
         userRepository.delete(user);
 
         return new ResponseDto("SUCCESS",user.getId());
