@@ -26,9 +26,9 @@ public class QPlanner extends EntityPathBase<Planner> {
 
     public final NumberPath<Long> plannerId = createNumber("plannerId", Long.class);
 
-    public final StringPath studyTime = createString("studyTime");
+    public final QStudyTime studyTime;
 
-    public final StringPath title = createString("title");
+    public final ListPath<TodayStudy, QTodayStudy> todayStudyList = this.<TodayStudy, QTodayStudy>createList("todayStudyList", TodayStudy.class, QTodayStudy.class, PathInits.DIRECT2);
 
     public final com.project.skb.user.domain.QUser user;
 
@@ -50,6 +50,7 @@ public class QPlanner extends EntityPathBase<Planner> {
 
     public QPlanner(Class<? extends Planner> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.studyTime = inits.isInitialized("studyTime") ? new QStudyTime(forProperty("studyTime")) : null;
         this.user = inits.isInitialized("user") ? new com.project.skb.user.domain.QUser(forProperty("user"), inits.get("user")) : null;
     }
 

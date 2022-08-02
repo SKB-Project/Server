@@ -2,14 +2,14 @@ package com.project.skb.planner.service;
 
 import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
-import com.project.skb.planner.domain.Planner;
-import com.project.skb.planner.domain.PlannerRepositoryImpl;
+import com.project.skb.planner.domain.*;
 import com.project.skb.planner.request.GetStudyTimeRequestDto;
+import com.project.skb.planner.request.StudyTimeRequestDto;
+import com.project.skb.planner.request.TodayStudyRequestDto;
 import com.project.skb.planner.response.GetStudyTimeResponseDto;
 import com.project.skb.user.domain.User;
-import com.project.skb.planner.domain.PlannerRepository;
 import com.project.skb.user.domain.UserRepository;
-import com.project.skb.planner.request.WriteStudyTimeRequestDto;
+import com.project.skb.planner.request.StudyRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,16 +34,44 @@ public class PlannerService {
     private final PlannerRepositoryImpl plannerRepositoryImpl;
 
     @Transactional
-    public ResponseDto writeStudyContent(ServletRequest request, WriteStudyTimeRequestDto writeStudyTimeRequestDto) {
+    public ResponseDto writeStudyContent(ServletRequest request, StudyRequestDto studyRequestDto) {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);
         User user = (User) userDetailsService.loadUserByUsername(jwtAuthenticationProvider.getUserPk(token));
 
-        Planner planner = Planner.builder()
-                .title(writeStudyTimeRequestDto.getTitle())
-                .studyTime(writeStudyTimeRequestDto.getStudyTime())
+        List<TodayStudyRequestDto> dayDto = studyRequestDto.getTodayStudyRequestDtoList();
+        StudyTimeRequestDto studyTimeRequestDto = studyRequestDto.getStudyTimeRequestDto();
+
+        List<TodayStudy> todayStudyList = new ArrayList<>();
+        LocalTime totalStudyTime = LocalTime.of(0,0);
+
+        for(TodayStudyRequestDto t : dayDto){
+
+            LocalTime studyTimeOne = t.getStudyTime();
+
+            TodayStudy tempStudy = TodayStudy.builder()
+                    .title(t.getTitle())
+                    .studyTime(studyTimeOne)
+                    .build();
+
+            todayStudyList.add(tempStudy);
+
+            totalStudyTime.plusHours(studyTimeOne.getHour());
+            totalStudyTime.plusMinutes(studyTimeOne.getMinute());
+        }
+
+        StudyTime studyTime = StudyTime.builder()
+                .wakeUpTime(studyTimeRequestDto.getWakeUpTime())
+                .startTime(studyTimeRequestDto.getStartTime())
+                .endTime(studyTimeRequestDto.getEndTime())
+                .totalStudyTime(totalStudyTime)
                 .build();
 
-        planner.insertUser(user);
+        Planner planner = Planner.builder()
+                .todayStudyList(todayStudyList)
+                .studyTime(studyTime)
+                .user(user)
+                .build();
+
         plannerRepository.save(planner);
 
         return new ResponseDto("SUCCESS",planner.getPlannerId());

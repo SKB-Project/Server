@@ -2,7 +2,7 @@ package com.project.skb.planner.controller;
 
 import com.project.skb.ResponseDto;
 import com.project.skb.planner.request.GetStudyTimeRequestDto;
-import com.project.skb.planner.request.WriteStudyTimeRequestDto;
+import com.project.skb.planner.request.StudyRequestDto;
 import com.project.skb.planner.service.PlannerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +21,8 @@ public class PlannerController {
 
     @PostMapping("study/planner/time/create")
     public ResponseDto writeStudyContent(ServletRequest request ,
-                                      @Valid @RequestBody WriteStudyTimeRequestDto writeStudyTimeRequestDto){
-        return plannerService.writeStudyContent(request, writeStudyTimeRequestDto);
+                                      @Valid @RequestBody StudyRequestDto studyRequestDto){
+        return plannerService.writeStudyContent(request, studyRequestDto);
     }
 
     @GetMapping("study/planner/studyTime/day/get")

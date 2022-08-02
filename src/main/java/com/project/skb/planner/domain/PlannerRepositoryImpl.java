@@ -22,8 +22,7 @@ public class PlannerRepositoryImpl implements PlannerRepositoryCustom {
 
         List<GetStudyTimeResponseDto> result = jpaQueryFactory
                 .select(Projections.fields(GetStudyTimeResponseDto.class,
-                        QPlanner.planner.studyTime,
-                        QPlanner.planner.title))
+                        QPlanner.planner.studyTime.totalStudyTime))
                 .from(QPlanner.planner)
                 .where(userIdEq(userId)
                     .and(dateEq(date))) // "and()"는 ","로 대체 가능
@@ -36,8 +35,7 @@ public class PlannerRepositoryImpl implements PlannerRepositoryCustom {
 
         List<GetStudyTimeResponseDto> result = jpaQueryFactory
                 .select(Projections.fields(GetStudyTimeResponseDto.class,
-                        QPlanner.planner.studyTime,
-                        QPlanner.planner.title))
+                        QPlanner.planner.studyTime.totalStudyTime))
                 .from(QPlanner.planner)
                 .where(userIdEq(userId), QPlanner.planner.date.between(startDate, endDate))
                 .fetch();
