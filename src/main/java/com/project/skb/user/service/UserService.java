@@ -4,6 +4,7 @@ import com.project.skb.ResponseDto;
 import com.project.skb.config.security.JwtAuthenticationProvider;
 import com.project.skb.user.domain.User;
 import com.project.skb.user.repository.UserRepository;
+import com.project.skb.user.response.LoginDto;
 import com.project.skb.user.request.SignInRequestDto;
 import com.project.skb.user.request.SignUpRequestDto;
 import com.project.skb.user.response.TokenDto;
@@ -77,7 +78,11 @@ public class UserService {
         redisTemplate.opsForValue().set("RT:"+user.getEmail(),
                 tokenDto.getRefreshToken(), tokenDto.getRefreshTokenTime(), TimeUnit.MILLISECONDS);
 
-        return new ResponseDto("SUCCESS", tokenDto);
+        LoginDto loginDto = new LoginDto();
+        loginDto.setUserId(user.getId());
+        loginDto.setTokenDto(tokenDto);
+        // login시 userid 넘겨주기 위함
+        return new ResponseDto("SUCCESS",loginDto);
     }
 
     public ResponseDto userQuit(ServletRequest request) {
@@ -86,6 +91,10 @@ public class UserService {
 
         // 해야할 것
         // user 값이 null일 경우 체크
+
+        if(user.getId() == null){
+            return new ResponseDto("FAIL","존재하지 않는 유저입니다!");
+        }
         userRepository.delete(user);
 
         return new ResponseDto("SUCCESS",user.getId());

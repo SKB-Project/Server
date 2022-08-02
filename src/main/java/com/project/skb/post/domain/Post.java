@@ -42,6 +42,7 @@ public class Post {
     @Column(name = "view_count")
     private Long viewCount; // 조회수 기능을 위한 게시글 조회수 변수
 
+    // (fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "id")
     private User user;
