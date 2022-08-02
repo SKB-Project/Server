@@ -11,5 +11,5 @@ public class SkbApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SkbApplication.class, args);
 	}
-// test
+
 }

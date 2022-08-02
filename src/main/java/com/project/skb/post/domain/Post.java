@@ -39,7 +39,7 @@ public class Post {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private User user;
 
@@ -50,19 +50,7 @@ public class Post {
         this.content = content;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setUser(User user) {
+    public void insertUser(User user) {
         this.user = user;
     }
 }
