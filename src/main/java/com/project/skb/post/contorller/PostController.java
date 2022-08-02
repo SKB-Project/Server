@@ -32,6 +32,16 @@ public class PostController {
         return postService.getPost(request, postId);
     }
 
+    @GetMapping("/post/next/{postId}/get")
+    public ResponseDto getNextPost(ServletRequest request, @PathVariable Long postId){
+        return postService.getNextPost(request, postId);
+    }
+
+    @GetMapping("/post/prev/{postId}/get")
+    public ResponseDto getPrevPost(ServletRequest request, @PathVariable Long postId){
+        return postService.getPrevPost(request, postId);
+    }
+
 
     @GetMapping("/posts/{type}/get")
     public ResponseDto getPosts(ServletRequest request, @PathVariable String type,
@@ -50,4 +60,8 @@ public class PostController {
         return postService.deletePost(request, postId);
     }
 
+    @PostMapping("/post/{postId}/viewCount") // 게시글 조회수를 올리는 api
+    public ResponseDto viewCountPost(ServletRequest request, @PathVariable Long postId){
+        return postService.viewCountPost(request, postId);
+    }
 }
