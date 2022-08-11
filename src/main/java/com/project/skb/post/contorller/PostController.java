@@ -45,7 +45,7 @@ public class PostController {
 
     @GetMapping("/posts/{type}/get")
     public ResponseDto getPosts(ServletRequest request, @PathVariable String type,
-            @PageableDefault(size=10, sort="postId", direction= Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size=50, sort="postId", direction= Sort.Direction.DESC) Pageable pageable) {
         return postService.getPosts(request, type, pageable);
     }
 
@@ -55,7 +55,7 @@ public class PostController {
         return postService.editPost(request, postId, editPostRequestDto);
     }
 
-    @DeleteMapping("post/{postId}/delete")
+    @DeleteMapping("/post/{postId}/delete") // post앞 '/' 추가
     public ResponseDto deletePost(ServletRequest request, @PathVariable Long postId){
         return postService.deletePost(request, postId);
     }

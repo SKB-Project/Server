@@ -45,8 +45,6 @@ public class PostService {
         post.insertUser(user);
         post.setViewCount(0L); // 추가된 부분 처음 게시글을 만들면 조회수 0
 
-        post.insertUser(user);
-
         postRepository.save(post);
 
         return new ResponseDto("SUCCESS", post.getPostId());
@@ -54,7 +52,6 @@ public class PostService {
     }
 
     public ResponseDto getPost(ServletRequest request, Long postId) {
-
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException());
 
@@ -64,6 +61,7 @@ public class PostService {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .dateTime(post.getDateTime())
+                .createdPostUserId(post.getUser().getId())
                 .build();
 
         return new ResponseDto("SUCCESS", getPostResponseDto);
